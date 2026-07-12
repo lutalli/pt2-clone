@@ -29,3 +29,4 @@ pt_pal_editor/vs2019_project/pt_pal_editor/x64/Debug/pt_pal_editor.vcxproj.FileL
 *.iobj
 *.enc
 release/macos/pt2-clone-macos.app/Contents/MacOS/pt2-clone-macos
+conf.vim

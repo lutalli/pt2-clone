@@ -313,6 +313,26 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		}
 		break;
 
+		case SDL_SCANCODE_SPACE:
+		{
+			if (editor.currMode == MODE_PLAY)
+			{
+				modStop();
+				editor.currMode = MODE_IDLE;
+				pointerSetMode(POINTER_MODE_IDLE, DO_CARRY);
+				statusAllRight();
+			}
+			else if (!ui.askBoxShown)
+			{
+				editor.playMode = PLAY_MODE_NORMAL;
+				modPlay(DONT_SET_PATTERN, song->currPos, DONT_SET_ROW);
+				editor.currMode = MODE_PLAY;
+				pointerSetMode(POINTER_MODE_PLAY, DO_CARRY);
+				statusAllRight();
+			}
+		}
+		break;
+
 #ifdef __APPLE__
 		case SDL_SCANCODE_RALT:
 #else
@@ -345,6 +365,9 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		}
 		break;
 
+		// ESCAPE now toggles edit mode,
+		// unless pos editor, disk op, etc. is open,
+		// where ESCAPE closes the screen
 		case SDL_SCANCODE_ESCAPE:
 		{
 			if (ui.posEdScreenShown)
@@ -366,12 +389,34 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 				ui.editOpScreenShown = false;
 				displayMainScreen();
 			}
+			// pause if song is playing
+			else if (editor.currMode == MODE_PLAY)
+			{
+				modStop();
+				editor.currMode = MODE_IDLE;
+				pointerSetMode(POINTER_MODE_IDLE, DO_CARRY);
+				statusAllRight();
+			}
+			// enter IDLE if EDIT
+			else if (editor.currMode == MODE_EDIT || editor.currMode == MODE_RECORD)
+			{
+				if (!ui.samplerScreenShown)
+				{
+					modStop();
+					editor.currMode = MODE_IDLE;
+					pointerSetMode(POINTER_MODE_IDLE, DO_CARRY);
+					statusAllRight();
+				}
+			}
+			// enter EDIT otherwise
 			else
 			{
-				if (askBox(ASKBOX_YES_NO, "REALLY QUIT ?"))
+				if (!ui.samplerScreenShown)
 				{
-					ui.throwExit = true;
-					return;
+					modStop();
+					editor.currMode = MODE_EDIT;
+					pointerSetMode(POINTER_MODE_EDIT, DO_CARRY);
+					statusAllRight();
 				}
 			}
 
@@ -644,39 +689,6 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 
 				if (audioWasntLocked)
 					unlockAudio();
-			}
-		}
-		break;
-
-		// toggle between IDLE and EDIT (IDLE if PLAY)
-		case SDL_SCANCODE_SPACE:
-		{
-			if (editor.currMode == MODE_PLAY)
-			{
-				modStop();
-				editor.currMode = MODE_IDLE;
-				pointerSetMode(POINTER_MODE_IDLE, DO_CARRY);
-				statusAllRight();
-			}
-			else if (editor.currMode == MODE_EDIT || editor.currMode == MODE_RECORD)
-			{
-				if (!ui.samplerScreenShown)
-				{
-					modStop();
-					editor.currMode = MODE_IDLE;
-					pointerSetMode(POINTER_MODE_IDLE, DO_CARRY);
-					statusAllRight();
-				}
-			}
-			else
-			{
-				if (!ui.samplerScreenShown)
-				{
-					modStop();
-					editor.currMode = MODE_EDIT;
-					pointerSetMode(POINTER_MODE_EDIT, DO_CARRY);
-					statusAllRight();
-				}
 			}
 		}
 		break;
