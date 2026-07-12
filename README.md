@@ -17,6 +17,7 @@ Current version: `1.91c`
     - <kbd>Enter</kbd> gives E
     - <kbd>.</kbd> gives F
     - Achieve 10 ~ 1F by holding <kbd>Shift</kbd>.
+- <kbd>Shift</kbd>+<kbd>Del</kbd> to kill the sample.
 
 # New Features
 

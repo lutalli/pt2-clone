@@ -547,10 +547,18 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 
 		case SDL_SCANCODE_DELETE:
 		{
-			if (ui.samplerScreenShown)
-				samplerSamDelete(NO_SAMPLE_CUT);
+			if (keyb.shiftPressed)
+			{
+				if (askBox(ASKBOX_YES_NO, "KILL SAMPLE ?"))
+					killSample();
+			}
 			else
-				handleEditKeys(scancode, EDIT_NORMAL);
+			{
+				if (ui.samplerScreenShown)
+					samplerSamDelete(NO_SAMPLE_CUT);
+				else
+					handleEditKeys(scancode, EDIT_NORMAL);
+			}
 		}
 		break;
 
