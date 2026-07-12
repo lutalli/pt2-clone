@@ -65,7 +65,7 @@ static void drawPatternNormal(void)
 			if (i == MIDDLE_ROW) // middle row has twice as tall glyphs
 			{
 				y++;
-				printTwoDecimalsBigBg(8, y, row, video.palette[PAL_GENTXT], video.palette[PAL_GENBKG]);
+				printTwoHexBigBg(8, y, row, video.palette[PAL_GENTXT], video.palette[PAL_GENBKG]);
 
 				note_t *note = patt + (row << 2);
 				int32_t x = 32;
@@ -91,7 +91,7 @@ static void drawPatternNormal(void)
 			}
 			else // non-middle rows
 			{
-				printTwoDecimalsBg(8, y, row, video.palette[PAL_PATTXT], video.palette[PAL_BACKGRD]);
+				printTwoHexBg(8, y, row, video.palette[PAL_PATTXT], video.palette[PAL_BACKGRD]);
 
 				note_t *note = patt + (row << 2);
 				int32_t x = 32;
