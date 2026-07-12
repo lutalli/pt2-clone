@@ -2,7 +2,7 @@
 
 This is a personal fork of [8bitbubsy/pt2-clone](https://github.com/8bitbubsy/pt2-clone).
 
-Current version: `1.91c`
+Current version: `v1.91c`
 
 # New Keybinds
 
