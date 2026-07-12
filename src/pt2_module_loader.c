@@ -253,7 +253,6 @@ void setupLoadedMod(void)
 	editor.modLoaded = true;
 	editor.blockMarkFlag = false;
 	editor.sampleZero = false;
-	editor.hiLowInstr = 0;
 
 	// disable LED filter after module load (real PT doesn't do this)
 	setLEDFilter(false);

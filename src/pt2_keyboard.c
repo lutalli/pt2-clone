@@ -1350,12 +1350,24 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		}
 		break;
 
+		/*
+			New keypad bindings for switching sample:
+
+			  A B C
+			7 8 9 D
+			4 5 6        Hold SHIFT ==> + 0x10
+			1 2 3 E
+			0   F
+
+			editor.hiLowInstr became unnecessary and was therefore removed
+		*/
+
 		case SDL_SCANCODE_KP_0:
 		{
-			if (editor.hiLowInstr >= 0x10)
+			if (keyb.shiftPressed)
 			{
 				editor.sampleZero = false;
-				editor.currSample = 0x10-1;
+				editor.currSample = 0x0f;
 			}
 			else
 			{
@@ -1370,9 +1382,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_1:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 12;
-
+			editor.currSample = 0;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1389,9 +1403,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_2:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 13;
-
+			editor.currSample = 1;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1408,9 +1424,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_3:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 14;
-
+			editor.currSample = 2;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1427,9 +1445,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_4:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 8;
-
+			editor.currSample = 3;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1446,9 +1466,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_5:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 9;
-
+			editor.currSample = 4;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1465,9 +1487,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_6:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 10;
-
+			editor.currSample = 5;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1484,9 +1508,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_7:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 4;
-
+			editor.currSample = 6;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1503,9 +1529,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_8:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 5;
-
+			editor.currSample = 7;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1522,99 +1550,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_9:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 6;
-
+			editor.currSample = 8;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
-			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
-			{
-				ui.changingDrumPadNote = true;
-				setStatusMessage("SELECT NOTE", NO_CARRY);
-				pointerSetMode(POINTER_MODE_MSG1, NO_CARRY);
-				break;
-			}
 
-			if (editor.pNoteFlag > 0)
-				handleEditKeys(scancode, EDIT_SPECIAL);
-		}
-		break;
-
-		case SDL_SCANCODE_KP_ENTER:
-		{
-			editor.hiLowInstr ^= 0x10;
-
-			if (editor.sampleZero)
-			{
-				editor.currSample = 15;
-				editor.sampleZero = false;
-			}
-			else
-			{
-				editor.currSample ^= 0x10;
-			}
-
-			if (editor.currSample == 31) // kludge if sample was 15 (0010 in UI) before key press
-			{
-				editor.currSample = 15;
-				editor.sampleZero ^= 1;
-			}
-
-			updateCurrSample();
-			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
-			{
-				ui.changingDrumPadNote = true;
-				setStatusMessage("SELECT NOTE", NO_CARRY);
-				pointerSetMode(POINTER_MODE_MSG1, NO_CARRY);
-				break;
-			}
-
-			if (editor.pNoteFlag > 0)
-				handleEditKeys(scancode, EDIT_SPECIAL);
-		}
-		break;
-
-		case SDL_SCANCODE_KP_PLUS:
-		{
-			editor.sampleZero = false;
-
-			// the Amiga numpad has one more key, so we need to use this key for two sample numbers...
-			if (editor.keypadToggle8CFlag)
-				editor.currSample = editor.hiLowInstr + (0x0C - 1);
-			else
-				editor.currSample = editor.hiLowInstr + (0x08 - 1);
-
-			updateCurrSample();
-			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
-				displayErrorMsg("INVALID PAD KEY !");
-
-			editor.keypadToggle8CFlag ^= 1;
-		}
-		break;
-
-		case SDL_SCANCODE_KP_MINUS:
-		{
-			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 3;
-
-			updateCurrSample();
-			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
-			{
-				ui.changingDrumPadNote = true;
-				setStatusMessage("SELECT NOTE", NO_CARRY);
-				pointerSetMode(POINTER_MODE_MSG1, NO_CARRY);
-				break;
-			}
-
-			if (editor.pNoteFlag > 0)
-				handleEditKeys(scancode, EDIT_SPECIAL);
-		}
-		break;
-
-		case SDL_SCANCODE_KP_MULTIPLY:
-		{
-			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 2;
-
-			updateCurrSample();
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1631,9 +1571,11 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		case SDL_SCANCODE_KP_DIVIDE:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 1;
-
+			editor.currSample = 9;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1647,12 +1589,69 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 		}
 		break;
 
-		case SDL_SCANCODE_NUMLOCKCLEAR:
+		case SDL_SCANCODE_KP_MULTIPLY:
 		{
 			editor.sampleZero = false;
-			editor.currSample = editor.hiLowInstr + 0;
-
+			editor.currSample = 0x0a;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
 			updateCurrSample();
+
+			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
+			{
+				ui.changingDrumPadNote = true;
+				setStatusMessage("SELECT NOTE", NO_CARRY);
+				pointerSetMode(POINTER_MODE_MSG1, NO_CARRY);
+				break;
+			}
+
+			if (editor.pNoteFlag > 0)
+				handleEditKeys(scancode, EDIT_SPECIAL);
+		}
+		break;
+
+		case SDL_SCANCODE_KP_MINUS:
+		{
+			editor.sampleZero = false;
+			editor.currSample = 0x0b;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
+			updateCurrSample();
+
+			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
+			{
+				ui.changingDrumPadNote = true;
+				setStatusMessage("SELECT NOTE", NO_CARRY);
+				pointerSetMode(POINTER_MODE_MSG1, NO_CARRY);
+				break;
+			}
+
+			if (editor.pNoteFlag > 0)
+				handleEditKeys(scancode, EDIT_SPECIAL);
+		}
+		break;
+
+		case SDL_SCANCODE_KP_PLUS:
+		{
+			editor.sampleZero = false;
+			editor.currSample = 0x0c;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
+			updateCurrSample();
+
+			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
+				displayErrorMsg("INVALID PAD KEY !");
+		}
+		break;
+
+		case SDL_SCANCODE_KP_ENTER:
+		{
+			editor.sampleZero = false;
+			editor.currSample = 0x0d;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
+			updateCurrSample();
+
 			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
 			{
 				ui.changingDrumPadNote = true;
@@ -1670,8 +1669,28 @@ void keyDownHandler(SDL_Scancode scancode, SDL_Keycode keycode)
 
 		case SDL_SCANCODE_KP_PERIOD:
 		{
-			if (askBox(ASKBOX_YES_NO, "KILL SAMPLE ?"))
-				killSample();
+			editor.sampleZero = false;
+			editor.currSample = 0x0e;
+			if (keyb.shiftPressed)
+				editor.currSample += 0x10;
+			updateCurrSample();
+		}
+		break;
+
+		case SDL_SCANCODE_NUMLOCKCLEAR:
+		{
+			if (keyb.leftAltPressed && editor.pNoteFlag > 0)
+			{
+				ui.changingDrumPadNote = true;
+
+				setStatusMessage("SELECT NOTE", NO_CARRY);
+				pointerSetMode(POINTER_MODE_MSG1, NO_CARRY);
+
+				break;
+			}
+
+			if (editor.pNoteFlag > 0)
+				handleEditKeys(scancode, EDIT_SPECIAL);
 		}
 		break;
 

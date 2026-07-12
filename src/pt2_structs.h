@@ -156,7 +156,7 @@ typedef struct editor_t
 	char *entryNameTmp, *currPath, *dropTempFileName;
 	UNICHAR *fileNameTmpU, *currPathU, *modulesPathU, *samplesPathU;
 
-	bool errorMsgActive, errorMsgBlock, multiFlag, metroFlag, keypadToggle8CFlag, normalizeFiltersFlag;
+	bool errorMsgActive, errorMsgBlock, multiFlag, metroFlag, normalizeFiltersFlag;
 	bool sampleAllFlag, halveSampleFlag, newOldFlag, pat2SmpHQ, mixFlag;
 	bool modLoaded, autoInsFlag, repeatKeyFlag, sampleZero, tuningToneFlag;
 	bool stepPlayEnabled, stepPlayBackwards, blockBufferFlag, blockMarkFlag, didQuantize;
@@ -165,7 +165,7 @@ typedef struct editor_t
 
 	int8_t smpRedoFinetunes[MOD_SAMPLES], smpRedoVolumes[MOD_SAMPLES], multiModeNext[4], trackPattFlag;
 	int8_t *smpRedoBuffer[MOD_SAMPLES], currSample, recordMode, sampleFrom, sampleTo, autoInsSlot;
-	int8_t hiLowInstr, note1, note2, note3, note4, oldNote1, oldNote2, oldNote3, oldNote4, stepPlayLastMode;
+	int8_t note1, note2, note3, note4, oldNote1, oldNote2, oldNote3, oldNote4, stepPlayLastMode;
 	uint8_t playMode, currMode, tuningChan, tuningVol, errorMsgCounter, buffFromPos, buffToPos;
 	uint8_t blockFromPos, blockToPos, timingMode, f6Pos, f7Pos, f8Pos, f9Pos, f10Pos, keyOctave, pNoteFlag;
 	uint8_t tuningNote, resampleNote, initialTempo, initialSpeed, editMoveAdd;

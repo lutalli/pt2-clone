@@ -1818,7 +1818,6 @@ void clearSamples(void)
 	memset(song->sampleData, 0, (MOD_SAMPLES + 1) * config.maxSampleLength);
 
 	editor.currSample = 0;
-	editor.hiLowInstr = 0;
 	editor.sampleZero = false;
 	editor.blockMarkFlag = false;
 	editor.samplePos = 0;
