@@ -1020,7 +1020,7 @@ void renderAboutScreen(void)
 	// draw version string
 
 	sprintf(verString, "v%s", PROG_VER_STR);
-	uint32_t verStringX = 260 + (((63 - ((uint32_t)strlen(verString) * (FONT_CHAR_W - 1))) + 1) / 2);
+	uint32_t verStringX = 256 + (((63 - ((uint32_t)strlen(verString) * (FONT_CHAR_W - 1))) + 1) / 2);
 	textOutTight(verStringX, 67, verString, video.palette[PAL_GENBKG2]);
 }
 
